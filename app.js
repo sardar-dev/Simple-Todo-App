@@ -1,22 +1,38 @@
-let input = document.querySelector(".inp"); //selecting input
-let ul = document.querySelector("ul"); //selecting ul
+let input = document.querySelector(".input");
+let ul = document.querySelector(".ul");
+let total = document.querySelector(".total");
+let empty = document.querySelector(".empty");
+let list = [];
 
-function todo(event) {
-  event.preventDefault(); //stop from reloading
+function mainn(event) {
+  event.preventDefault();
 
-  let value = input.value; //getting value from input
+  if (input.value.trim() === "") {
+    empty.innerHTML = "Type something before add";
+    show();
+    return;
+  }
+  list.push(input.value.trim());
+  empty.innerHTML = "";
+  input.value = "";
+  show();
 }
+function show() {
+  ul.innerHTML = "";
 
-let list = [
-  "recite quran",
-  "go to library ",
-  "read book",
-  "make to-do app",
-  "duolingo",
-  "css practice",
-];
+  for (let i = 0; i < list.length; i++) {
+    ul.innerHTML += ` <li> ${list[i]} <button onclick = "remove(${i})"> ❌ </button> </li>  `;
+  }
 
-for (let i = 0; i < list.length; i++) {
-  //for loop
-  ul.innerHTML += `<li><input type="checkbox" /> ${list[i]}</li>`;
+  count = list.length;
+  total.innerHTML = "total " + count;
+}
+function remove(index) {
+  list.splice(index, 1);
+  show();
+}
+function deleteAll() {
+  list = [];
+
+  show();
 }
